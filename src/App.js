@@ -17,9 +17,11 @@ function App() {
 
     let task = {
       id: idOfLastElement + 1,
-      taskName: newTask === ""? 'Please add a task': newTask
+      taskName: newTask === ""? 'Please add a task': newTask,
+      status: false
     }
-
+    
+    // Make 'add task' input empty and add new task to todo list 
     setNewTask("")    
     setTodoList([...todoList, task]);
   }
@@ -29,6 +31,19 @@ function App() {
     setTodoList(todoList.filter((task) => task.id !== id));
   }
 
+  const updateStatus = (id) => {
+    let updateList = todoList.map((task) => {
+
+        if (task.id === id) {
+          return {...task, status: !task.status};
+        }
+
+        return task;
+    });
+
+    // update todoList
+    setTodoList(updateList)
+  }
   return (
     
     <div id='main' className="data-reactroot">
@@ -41,8 +56,7 @@ function App() {
       <ul className='list-group'>
           {
             todoList.map((task) => {
-
-                return <Task taskName = {task.taskName} deleteTask = {deleteTask} id = {task.id}/>;
+                return <Task task={task} deleteTask={deleteTask} updateStatus={updateStatus}/>;
             })
           }
       </ul>
