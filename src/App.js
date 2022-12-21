@@ -4,24 +4,23 @@ import './App.css';
 function App() {
 
   const [todoList, setTodoList] = useState([]);
-  const [newTask, setNewTask] = useState([]);
+  const [newTask, setNewTask] = useState("");
 
   const handleNewTask = (event) => {
     setNewTask(event.target.value);
   }
 
   const addNewTask = () => {
-        // get id of the the last element, if array is empty take 1 as default value of id
-        let idOfLastElement = todoList.length === 0? 1: todoList[todoList.length - 1].id;
+    // get id of the the last element, if array is empty take 1 as default value of id
+    let idOfLastElement = todoList.length === 0? 1: todoList[todoList.length - 1].id;
 
-        let task = {
-          id: idOfLastElement + 1,
-          taskName: newTask
-        }
+    let task = {
+      id: idOfLastElement + 1,
+      taskName: newTask === ""? 'Please add a task': newTask
+    }
 
-        
+    setNewTask("")    
     setTodoList([...todoList, task]);
-    console.log(todoList, todoList.length)
   }
 
   const deleteTask = (taskToDelete) => {
@@ -35,7 +34,7 @@ function App() {
       <h1>Todo List</h1>
 
       <div className='form-inline'>
-        <input className='form-control' onChange={handleNewTask} />
+        <input className='form-control' onChange={handleNewTask} value={newTask} />
         <button className='addTask btn btn-default' onClick={addNewTask}>Add task</button>
       </div>
       <ul className='list-group'>
