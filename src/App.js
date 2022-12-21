@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import Task from './Task';
 
 function App() {
 
@@ -23,9 +24,9 @@ function App() {
     setTodoList([...todoList, task]);
   }
 
-  const deleteTask = (taskToDelete) => {
+  const deleteTask = (id) => {
     // if 'task' is equal to 'taskToDelete', it will return ture else it will return false.
-    setTodoList(todoList.filter((task) => task.id !== taskToDelete.id));
+    setTodoList(todoList.filter((task) => task.id !== id));
   }
 
   return (
@@ -41,15 +42,7 @@ function App() {
           {
             todoList.map((task) => {
 
-                return(
-                  <li className="list-group-item ">
-                    <div>
-                      <span className="glyphicon glyphicon-ok icon" aria-hidden="true"></span>
-                      {task.taskName}
-                      <button type="button" className="close" onClick={() => deleteTask(task)}>&times;</button>
-                    </div>
-                  </li>     
-                );
+                return <Task taskName = {task.taskName} deleteTask = {deleteTask} id = {task.id}/>;
             })
           }
       </ul>
